@@ -17,12 +17,12 @@ def create_note():
         title = request.form.get("title", "")
         content = request.form.get("content", "")
 
-        if not len(title.strip()) > 10:
-            flash("El titulo es muy corto, minino 10", "error")
+        if not len(title.strip()) > 5:
+            flash("El titulo debe tener minino 5 caracteres", "error")
             return render_template("note_form.html")
         
-        if not len(content.strip()) > 300:
-            flash("El contenido es muy corto, minimo 20", "error")
+        if not len(content.strip()) > 1:
+            flash("El contenido debe tener minimo 1 caracter", "error")
             return render_template("note_form.html")
         
         note_db = Note(title=title, content=content)
