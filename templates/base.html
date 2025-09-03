@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block app_notas %}Notas App{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+    setTimeout(function() {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(msg => {
+            msg.classList.add('transition', 'opacity-0'); // efecto de desaparición
+            setTimeout(() => msg.remove(), 500); // eliminar del DOM después de la transición
+        });
+    }, 2000);
+</script>
+
+</head>
+<body class="font-roboto">
+    <nav class="bg-blue-600 text-white p-4">
+        <h1 class="text-xl font-bold">Notas App</h1>
+    </nav>
+    
+    <!-- Sistema de mensajes con colores según categoría -->
+   {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category == 'success' %}
+                <div class="flash-message bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 opacity-100 transition-opacity duration-700 ease-out">
+                    {{ message }}
+                </div>
+            {% elif category == 'error' %}
+                <div class="flash-message bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 opacity-100 transition-opacity duration-700 ease-out">
+                    {{ message }}
+                </div>
+            {% elif category == 'warning' %}
+                <div class="flash-message bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 opacity-100 transition-opacity duration-700 ease-out">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+    
+    <main class="flex-grow container mx-auto py-6 px-4">
+
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="bg-gray-200 p-4 text-center text-gray-600">
+        &copy; 2025 Notas App 
+    </footer>
+</body>
+</html>
